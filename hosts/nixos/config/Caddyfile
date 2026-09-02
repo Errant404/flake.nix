@@ -1,0 +1,6 @@
+nixos.airplane-micro.ts.net {
+    redir /dsh /dsh/ 308
+    handle_path /dsh/* {
+        reverse_proxy 127.0.0.1:3080
+    }
+}

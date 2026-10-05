@@ -19,14 +19,21 @@
     iproute2
     inetutils
     nexttrace
+
     wget
     ripgrep
+    fd
     git
     htop
+    tealdeer
+
     nil
     nixd
     nixfmt
+
     distrobox
+    bubblewrap
+
     nodejs
     pnpm
     python3

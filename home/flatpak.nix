@@ -17,7 +17,7 @@
       "com.termius.Termius"
     ];
     overrides = {
-      writeMode = "merge";
+      writeMode = "replace";
       settings = {
         global = {
           Context.filesystems = [

@@ -17,6 +17,7 @@
       readOnly = true;
       entries = [
         "${pkgs.kdePackages.yakuake}/share/applications/org.kde.yakuake.desktop"
+        "${pkgs.bitwarden-desktop}/share/applications/bitwarden.desktop"
       ];
     };
   };
@@ -83,5 +84,10 @@
     extraConfig = ''
       set -as terminal-features ",xterm-256color:RGB"
     '';
+  };
+
+  programs.keepassxc = {
+    enable = true;
+    settings.Browser.UpdateBinaryPath = false;
   };
 }

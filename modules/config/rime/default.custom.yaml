@@ -1,0 +1,9 @@
+patch:
+  menu/page_size: 7
+  switcher/hotkeys:
+    - F4  # Control+grave 容易误触，仅保留 F4
+  key_binder/bindings/+:
+    - { when: has_menu, accept: Left,  send: Up }         # ← 上一个候选词
+    - { when: has_menu, accept: Right, send: Down }       # → 下一个候选词
+    - { when: has_menu, accept: Up,    send: Page_Up }    # ↑ 上一页
+    - { when: has_menu, accept: Down,  send: Page_Down }  # ↓ 下一页

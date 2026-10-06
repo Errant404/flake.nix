@@ -8,8 +8,14 @@
     kdePackages.kate
     kdePackages.yakuake
     kdePackages.kdeconnect-kde
-    vlc
     bitwarden-desktop
+    flameshot
+    # Audio
+    amberol
+    gapless
+    recordbox
+    # Video
+    unstable.cine
   ];
 
   services.desktopManager.plasma6.enable = true;

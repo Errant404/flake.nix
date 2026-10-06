@@ -20,7 +20,6 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
-      llm-agents,
       ...
     }@inputs:
     {
@@ -48,7 +47,7 @@
             ];
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = inputs;
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users."errant".imports = [
               ./home
               inputs.nix-flatpak.homeManagerModules.nix-flatpak

@@ -38,6 +38,7 @@
     pnpm
     python3
   ];
+  
   # https://wiki.nixos.org/wiki/Podman
   virtualisation.podman = {
     enable = true;
@@ -97,6 +98,10 @@
 
   nix.settings = {
     use-xdg-base-directories = true;
+    substituters = [
+      "https://mirror.nju.edu.cn/nix-channels/store"
+      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+    ];
     extra-substituters = [ "https://cache.numtide.com" ];
     extra-trusted-public-keys = [
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="

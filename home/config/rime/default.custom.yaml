@@ -1,4 +1,5 @@
 patch:
+  __include: rime_ice_suggestion:/
   menu/page_size: 7
   switcher/hotkeys:
     - F4  # Control+grave 容易误触，仅保留 F4

@@ -38,7 +38,7 @@
     pnpm
     python3
   ];
-  
+
   # https://wiki.nixos.org/wiki/Podman
   virtualisation.podman = {
     enable = true;
@@ -58,6 +58,7 @@
     LC_TELEPHONE = "zh_CN.UTF-8";
     LC_TIME = "zh_CN.UTF-8";
   };
+
   # https://wiki.nixos.org/wiki/Fonts
   fonts = {
     enableDefaultPackages = false;
@@ -71,6 +72,8 @@
       vista-fonts-cht
       nerd-fonts.jetbrains-mono
       nerd-fonts.caskaydia-mono
+      nur.repos.xddxdd.plangothic-fonts
+      (pkgs.callPackage ../pkgs/wenjin-mincho { })
     ];
     fontconfig = {
       enable = true;
@@ -78,10 +81,17 @@
         serif = [
           "Noto Serif"
           "Noto Serif CJK SC"
+          "WenJin Mincho Plane 0"
+          "WenJin Mincho Plane 2"
+          "WenJin Mincho Plane 3"
+          "CaskaydiaMono Nerd Font"
         ];
         sansSerif = [
           "Noto Sans"
           "Noto Sans CJK SC"
+          "Plangothic P1"
+          "Plangothic P2"
+          "CaskaydiaMono Nerd Font"
         ];
         monospace = [
           "Consolas"
@@ -96,13 +106,21 @@
   # https://wiki.nixos.org/wiki/Nix-ld
   programs.nix-ld.enable = true;
 
+  # https://wiki.nixos.org/wiki/Storage_optimization
+  nix.optimise.automatic = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
   nix.settings = {
     use-xdg-base-directories = true;
+    # https://help.mirrorz.org/nix-channels/
     substituters = [
-      "https://mirror.nju.edu.cn/nix-channels/store"
-      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store?priority=30"
     ];
-    extra-substituters = [ "https://cache.numtide.com" ];
+    extra-substituters = [ "https://cache.numtide.com?priority=50" ];
     extra-trusted-public-keys = [
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];

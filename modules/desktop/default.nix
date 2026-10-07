@@ -15,7 +15,7 @@
     gapless
     recordbox
     # Video
-    unstable.cine
+    vlc
   ];
 
   services.desktopManager.plasma6.enable = true;
@@ -31,7 +31,11 @@
     type = "fcitx5";
     fcitx5 = {
       addons = with pkgs; [
-        fcitx5-rime
+        (fcitx5-rime.override {
+          rimeDataPkgs = [
+            rime-ice
+          ];
+        })
         fcitx5-gtk
         qt6Packages.fcitx5-qt
         qt6Packages.fcitx5-configtool
@@ -41,12 +45,17 @@
     };
   };
 
-  services.daed.enable = true;
+  services.dae = {
+    enable = true;
+    package = pkgs.unstable.dae;
+    configFile = ../config/dae/config.dae;
+  };
   services.mihomo = {
     enable = true;
-    processesInfo = true;
-    webui = pkgs.unstable.metacubexd;
     package = pkgs.unstable.mihomo;
+    # https://metacubex.github.io/metacubexd/
+    webui = pkgs.unstable.metacubexd;
+    processesInfo = true;
     configFile = "/etc/nixos/secrets/mihomo.yaml";
   };
 

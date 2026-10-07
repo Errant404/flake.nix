@@ -34,25 +34,6 @@
             "org.kde.*" = "own";
           };
         };
-        "com.tencent.WeChat" = {
-          Context = {
-            sockets = [
-              "x11"
-              "wayland"
-            ];
-            unset-environment = [
-              "QT_AUTO_SCREEN_SCALE_FACTOR"
-              "QT_ENABLE_HIGHDPI_SCALING"
-              "QT_SCALE_FACTOR"
-              "QT_SCREEN_SCALE_FACTORS"
-              "QT_FONT_DPI"
-              "QT_SCALE_FACTOR_ROUNDING_POLICY"
-            ];
-          };
-          Environment = {
-            QT_QPA_PLATFORM = "wayland";
-          };
-        };
         "com.qq.QQ" = {
           Context.sockets = [
             "x11"

@@ -1,0 +1,60 @@
+# https://github.com/daeuniverse/dae/blob/main/example.dae
+global {
+    lan_interface: tailscale0
+    wan_interface: auto
+    auto_config_kernel_parameter: true
+}
+
+subscription {}
+
+# https://github.com/daeuniverse/dae/blob/main/docs/en/proxy-protocols.md
+node {
+    mihomo: 'socks5://127.0.0.1:10808'
+}
+
+# https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/dns.md
+dns {
+    upstream {
+        alidns: 'udp://dns.alidns.com:53'
+        googledns: 'tcp+udp://dns.google:53'
+        mihomo: 'udp://127.0.0.1:1053'
+    }
+    routing {
+        request {
+            qname(geosite:cn) -> alidns
+            fallback: mihomo
+        }
+    }
+}
+
+group {
+    proxy {
+        policy: min_moving_avg
+    }
+}
+
+# https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/routing.md
+routing {
+    pname(
+        NetworkManager,
+        systemd-resolved,
+        dnsmasq,
+        mihomo,
+        tailscaled
+    ) -> must_direct
+    dip(
+        100.64.0.0/10,
+        'fd7a:115c:a1e0::/48'
+    ) -> must_direct
+    dip(
+        198.18.0.0/16,
+        'fdfe:dcba:9876::/64'
+    ) -> proxy
+    dip(geoip:private) -> direct
+    dip(geoip:cn) -> direct
+    domain(
+        geosite:cn,
+        geosite:tailscale
+    ) -> direct
+    fallback: proxy
+}

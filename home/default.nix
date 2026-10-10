@@ -43,6 +43,7 @@
   ];
 
   services.syncthing.enable = true;
+  services.ssh-agent.enable = true;
 
   programs.git = {
     enable = true;
@@ -91,8 +92,15 @@
     settings.Browser.UpdateBinaryPath = false;
   };
 
-  xdg.dataFile = {
-    "fcitx5/rime/default.custom.yaml".source = ./config/rime/default.custom.yaml;
-    "fcitx5/rime/rime_ice.custom.yaml".source = ./config/rime/rime_ice.custom.yaml;
+  xdg = {
+    configFile = {
+      "distrobox/distrobox.conf".text = ''
+        container_manager="podman"
+      '';
+    };
+    dataFile = {
+      "fcitx5/rime/default.custom.yaml".source = ./config/rime/default.custom.yaml;
+      "fcitx5/rime/rime_ice.custom.yaml".source = ./config/rime/rime_ice.custom.yaml;
+    };
   };
 }

@@ -8,9 +8,9 @@ let
 in
 {
   imports = [
-    ../../modules/desktop
     ./hardware-configuration.nix
-    (import ../../modules/programs/gaming { inherit STEAM_HOME; })
+    ../../modules/desktop
+    (import ../../modules/programs/gaming/steam.nix { inherit STEAM_HOME; })
   ];
   networking.hostName = "nixos";
   # https://wiki.nixos.org/wiki/Bluetooth
@@ -22,6 +22,8 @@ in
   hardware.graphics.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true;
+  hardware.nvidia-container-toolkit.enable = true;
+  virtualisation.docker.daemon.settings.features.cdi = true;
   # https://wiki.nixos.org/wiki/GNU_GRUB
   boot = {
     tmp.cleanOnBoot = true;

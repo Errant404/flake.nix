@@ -1,17 +1,15 @@
 { pkgs, ... }: {
   networking.networkmanager.enable = true;
 
-  environment.sessionVariables = rec {
+  environment.sessionVariables = {
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
+
     QT_IM_MODULES = "wayland;fcitx";
     QT_IM_MODULE = "fcitx";
     XMODIFIERS = "@im=fcitx";
-    CUDA_CACHE_PATH = "${XDG_CACHE_HOME}/nv";
-    DOTNET_CLI_HOME = "${XDG_DATA_HOME}/dotnet";
-    GTK2_RC_FILES = "${XDG_CONFIG_HOME}/gtk-2.0/gtkrc";
   };
 
   environment.systemPackages = with pkgs; [
@@ -20,6 +18,8 @@
     inetutils
     nexttrace
 
+    _7zz
+    unzip
     wget
     ripgrep
     fd
@@ -31,18 +31,31 @@
     nixd
     nixfmt
 
-    distrobox
     bubblewrap
+    distrobox
+    compose2nix
+    qemu_full
+    quickemu
 
     nodejs
     pnpm
     python3
   ];
 
-  # https://wiki.nixos.org/wiki/Podman
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true;
+  virtualisation = {
+    # https://wiki.nixos.org/wiki/Docker
+    docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "daily";
+      };
+    };
+    # https://wiki.nixos.org/wiki/Podman
+    podman = {
+      enable = true;
+      dockerCompat = false;
+    };
   };
 
   time.timeZone = "Asia/Shanghai";

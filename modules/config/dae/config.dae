@@ -1,6 +1,6 @@
 # https://github.com/daeuniverse/dae/blob/main/example.dae
 global {
-    lan_interface: tailscale0
+    lan_interface: tailscale0,docker0
     wan_interface: auto
     auto_config_kernel_parameter: true
 }
@@ -40,16 +40,17 @@ routing {
         systemd-resolved,
         dnsmasq,
         mihomo,
-        tailscaled
+        nexttrace
     ) -> must_direct
     dip(
         100.64.0.0/10,
         'fd7a:115c:a1e0::/48'
-    ) -> must_direct
+    ) -> must_direct            # 避免接管发往 MagicDNS 的查询
+    pname(tailscaled) -> direct # 接管节点的 DNS 查询，避免污染
     dip(
         198.18.0.0/16,
         'fdfe:dcba:9876::/64'
-    ) -> proxy
+    ) -> proxy                  # 导入 fake-ip 至 mihomo
     dip(geoip:private) -> direct
     dip(geoip:cn) -> direct
     domain(

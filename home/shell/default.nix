@@ -1,4 +1,6 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
+  imports = [ ./starship.nix ];
+
   programs.bash = {
     enable = true;
     historyControl = [
@@ -14,12 +16,9 @@
 
       export GOPATH="$XDG_DATA_HOME/go"
       export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
-      export GOBIN="$HOME/.local/bin"
-
       export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
       export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
       export NPM_CONFIG_PREFIX="$XDG_DATA_HOME/npm"
-
       export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
       export DOTNET_CLI_HOME="$XDG_DATA_HOME/dotnet"
       export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
@@ -36,66 +35,5 @@
   programs.mcfly = {
     enable = true;
     enableBashIntegration = true;
-  };
-  programs.starship = {
-    enable = true;
-    enableBashIntegration = true;
-    settings = {
-      add_newline = false;
-      format = lib.concatStrings [
-        "$username"
-        "$hostname"
-        "$localip"
-        "$shlvl"
-        "$singularity"
-        "$kubernetes"
-        "$nats"
-        "$directory"
-        "$vcsh"
-        "$fossil_branch"
-        "$fossil_metrics"
-        "$git_branch"
-        "$git_commit"
-        "$git_state"
-        "$git_metrics"
-        "$git_status"
-        "$hg_branch"
-        "$hg_state"
-        "$pijul_channel"
-        "$docker_context"
-        "$python"
-        "$guix_shell"
-        "$nix_shell"
-        "$conda"
-        "$pixi"
-        "$spack"
-        "$memory_usage"
-        "$aws"
-        "$gcloud"
-        "$openstack"
-        "$azure"
-        "$direnv"
-        "$env_var"
-        "$custom"
-        "$sudo"
-        "$cmd_duration"
-        "$line_break"
-        "$jobs"
-        "$battery"
-        "$time"
-        "$status"
-        "$container"
-        "$netns"
-        "$os"
-        "$shell"
-        "$character"
-      ];
-      python = {
-        detect_extensions = [ ];
-        detect_files = [ ];
-        detect_folders = [ ];
-      };
-    };
-    presets = [ "nerd-font-symbols" ];
   };
 }

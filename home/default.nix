@@ -5,8 +5,8 @@
   programs.home-manager.enable = true;
 
   imports = [
+    ./shell
     ./flatpak.nix
-    ./shell.nix
   ];
 
   xdg = {
@@ -19,6 +19,15 @@
         "${pkgs.kdePackages.yakuake}/share/applications/org.kde.yakuake.desktop"
         "${pkgs.bitwarden-desktop}/share/applications/bitwarden.desktop"
       ];
+    };
+    configFile = {
+      "distrobox/distrobox.conf".text = ''
+        container_manager="podman"
+      '';
+    };
+    dataFile = {
+      "fcitx5/rime/default.custom.yaml".source = ./config/rime/default.custom.yaml;
+      "fcitx5/rime/rime_ice.custom.yaml".source = ./config/rime/rime_ice.custom.yaml;
     };
   };
 
@@ -81,10 +90,6 @@
   programs.tmux = {
     enable = true;
     mouse = true;
-    terminal = "tmux-256color";
-    extraConfig = ''
-      set -as terminal-features ",xterm-256color:RGB"
-    '';
   };
 
   programs.keepassxc = {
@@ -92,15 +97,13 @@
     settings.Browser.UpdateBinaryPath = false;
   };
 
-  xdg = {
-    configFile = {
-      "distrobox/distrobox.conf".text = ''
-        container_manager="podman"
-      '';
+  programs.retroarch = {
+    enable = true;
+    cores = {
+      melonds.enable = true;
+      ppsspp.enable = true;
+      swanstation.enable = true;
     };
-    dataFile = {
-      "fcitx5/rime/default.custom.yaml".source = ./config/rime/default.custom.yaml;
-      "fcitx5/rime/rime_ice.custom.yaml".source = ./config/rime/rime_ice.custom.yaml;
-    };
+    settings = { };
   };
 }

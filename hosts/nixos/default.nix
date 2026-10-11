@@ -10,7 +10,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../modules/desktop
-    (import ../../modules/programs/gaming/steam.nix { inherit STEAM_HOME; })
+    ../../modules/programs/steam.nix
   ];
   networking.hostName = "nixos";
   # https://wiki.nixos.org/wiki/Bluetooth

@@ -1,11 +1,15 @@
 { pkgs, ... }: {
   networking.networkmanager.enable = true;
 
-  environment.sessionVariables = {
+  environment.sessionVariables = rec {
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
+    XDG_BIN_HOME = "$HOME/.local/bin";
+    PATH = [
+      "${XDG_BIN_HOME}"
+    ];
 
     QT_IM_MODULES = "wayland;fcitx";
     QT_IM_MODULE = "fcitx";
@@ -19,6 +23,7 @@
     nexttrace
 
     _7zz
+    tree
     unzip
     wget
     ripgrep
@@ -118,6 +123,8 @@
 
   # https://wiki.nixos.org/wiki/Nix-ld
   programs.nix-ld.enable = true;
+
+  programs.nh.enable = true;
 
   # https://wiki.nixos.org/wiki/Storage_optimization
   nix.optimise.automatic = true;

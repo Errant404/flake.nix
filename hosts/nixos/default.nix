@@ -104,4 +104,8 @@ in
     enable = true;
     configFile = ./config/Caddyfile;
   };
+
+  environment.systemPackages = [
+    (pkgs.callPackage ../../pkgs/moore-perf-system { })
+  ];
 }

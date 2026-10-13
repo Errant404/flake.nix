@@ -15,6 +15,8 @@
       "cn.feishu.Feishu"
       "org.zotero.Zotero"
       "com.termius.Termius"
+      "com.usebottles.bottles"
+      "com.discordapp.Discord"
     ];
     overrides = {
       writeMode = "replace";

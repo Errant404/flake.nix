@@ -92,6 +92,8 @@
     mouse = true;
   };
 
+  programs.gh.enable = true;
+
   programs.keepassxc = {
     enable = true;
     settings.Browser.UpdateBinaryPath = false;

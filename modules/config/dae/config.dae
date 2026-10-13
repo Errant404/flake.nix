@@ -51,11 +51,12 @@ routing {
         198.18.0.0/16,
         'fdfe:dcba:9876::/64'
     ) -> proxy                  # 导入 fake-ip 至 mihomo
-    dip(geoip:private) -> direct
-    dip(geoip:cn) -> direct
     domain(
         geosite:cn,
+        geosite:private,
         geosite:tailscale
     ) -> direct
+    dip(geoip:cn) -> direct
+    dip(geoip:private) -> direct
     fallback: proxy
 }

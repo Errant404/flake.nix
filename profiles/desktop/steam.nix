@@ -9,7 +9,7 @@
     dedicatedServer.openFirewall = true;
     package = pkgs.steam.override {
       extraProfile = ''
-        STEAM_HOME="''${XDG_DATA_HOME}/steam-home"
+        STEAM_HOME="''${XDG_DATA_HOME:-$HOME/.local/share}/steam-home"
 
         if [ -z "''${XAUTHORITY:-}" ] && [ -f "$HOME/.Xauthority" ]; then
           export XAUTHORITY="$HOME/.Xauthority"

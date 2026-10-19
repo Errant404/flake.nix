@@ -1,4 +1,6 @@
 { pkgs, ... }: {
+  imports = [ ../modules/nixos ];
+
   networking.networkmanager.enable = true;
 
   environment.sessionVariables = rec {
@@ -21,6 +23,7 @@
     iproute2
     inetutils
     nexttrace
+    tcpdump
 
     _7zz
     tree
@@ -138,7 +141,7 @@
     use-xdg-base-directories = true;
     # https://help.mirrorz.org/nix-channels/
     substituters = [
-      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store?priority=30"
+      "https://mirrors.ustc.edu.cn/nix-channels/store?priority=30"
     ];
     extra-substituters = [ "https://cache.numtide.com?priority=50" ];
     extra-trusted-public-keys = [

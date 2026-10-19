@@ -7,21 +7,24 @@ global {
 
 subscription {}
 
-# https://github.com/daeuniverse/dae/blob/main/docs/en/proxy-protocols.md
+# https://github.com/daeuniverse/dae/blob/main/docs/zh/proxy-protocols.md
 node {
     mihomo: 'socks5://127.0.0.1:10808'
 }
 
-# https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/dns.md
+# https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/dns.md
 dns {
     upstream {
         alidns: 'udp://dns.alidns.com:53'
         googledns: 'tcp+udp://dns.google:53'
+        tailscale: 'udp://100.100.100.100:53'
         mihomo: 'udp://127.0.0.1:1053'
     }
     routing {
         request {
             qname(geosite:cn) -> alidns
+            qname(suffix:ts.net) -> tailscale
+            qname(suffix:lan) -> asis
             fallback: mihomo
         }
     }
@@ -33,13 +36,15 @@ group {
     }
 }
 
-# https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/routing.md
+# https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/routing.md
 routing {
     pname(
         NetworkManager,
         systemd-resolved,
         dnsmasq,
         mihomo,
+        hysteria,
+        mimic,
         nexttrace
     ) -> must_direct
     dip(

@@ -9,8 +9,8 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/desktop
-    ../../modules/programs/steam.nix
+    ../../profiles/desktop
+    ../../profiles/desktop/steam.nix
   ];
   networking.hostName = "nixos";
   # https://wiki.nixos.org/wiki/Bluetooth
@@ -24,11 +24,11 @@ in
   hardware.nvidia.open = true;
   hardware.nvidia-container-toolkit.enable = true;
   virtualisation.docker.daemon.settings.features.cdi = true;
-  # https://wiki.nixos.org/wiki/GNU_GRUB
   boot = {
     tmp.cleanOnBoot = true;
     loader = {
       efi.canTouchEfiVariables = true;
+      # https://wiki.nixos.org/wiki/GNU_GRUB
       grub = {
         enable = true;
         default = "saved";
@@ -37,6 +37,7 @@ in
         useOSProber = true;
       };
     };
+    mimic.enable = true;
   };
   # https://wiki.nixos.org/wiki/NTFS
   fileSystems."/mnt/c" = {
@@ -94,6 +95,26 @@ in
     ];
   };
 
+  services.dae = {
+    enable = true;
+    package = pkgs.unstable.dae;
+    configFile = ./config/dae/config.dae;
+  };
+  services.mihomo = {
+    enable = true;
+    package = pkgs.unstable.mihomo;
+    # https://metacubex.github.io/metacubexd/
+    webui = pkgs.unstable.metacubexd;
+    processesInfo = true;
+    configFile = "/etc/nixos/secrets/mihomo.yaml";
+  };
+  services.hysteria = {
+    enable = true;
+    package = pkgs.unstable.hysteria;
+    mode = "client";
+    configFile = "/etc/nixos/secrets/hysteria.yaml";
+  };
+
   services.tailscale = {
     # sudo tailscale set --accept-dns=false
     enable = true;
@@ -104,8 +125,4 @@ in
     enable = true;
     configFile = ./config/Caddyfile;
   };
-
-  environment.systemPackages = [
-    (pkgs.callPackage ../../pkgs/moore-perf-system { })
-  ];
 }

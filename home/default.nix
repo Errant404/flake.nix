@@ -33,22 +33,16 @@
 
   home.packages = with pkgs; [
     telegram-desktop
+    ookla-speedtest
     llm-agents.omp
     llm-agents.chatgpt
-    (llm-agents.dsh.overrideAttrs (old: {
-      postInstall = (old.postInstall or "") + ''
-              substituteInPlace \
-                $out/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js \
-                --replace-fail \
-              'createRequire(import.meta.url)("node-addon-require-builtin")' \
-        '{ requireBuiltin: createRequire(import.meta.url) }'
-      '';
-    }))
+    llm-agents.dsh
     (pkgs.buildFHSEnv {
       name = "pixi";
       runScript = "pixi";
       targetPkgs = pkgs: with pkgs; [ pixi ];
     })
+    (pkgs.callPackage ../pkgs/moore-perf-system { })
   ];
 
   services.syncthing.enable = true;

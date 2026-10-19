@@ -45,20 +45,6 @@
     };
   };
 
-  services.dae = {
-    enable = true;
-    package = pkgs.unstable.dae;
-    configFile = ../config/dae/config.dae;
-  };
-  services.mihomo = {
-    enable = true;
-    package = pkgs.unstable.mihomo;
-    # https://metacubex.github.io/metacubexd/
-    webui = pkgs.unstable.metacubexd;
-    processesInfo = true;
-    configFile = "/etc/nixos/secrets/mihomo.yaml";
-  };
-
   services.printing.enable = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
